@@ -20,17 +20,23 @@ function App() {
   const useFile = async () =>{
     if(file){
       setDecompressed(file.name)
-      // await fetch("https://ncnmjwtaooob5dzhmhhv3n52su.apigateway.il-jerusalem-1.oci.customer-oci.com/test/hello")
-      //       .then((res)=>res.json()).then((json)=>setResponse(json))
-      console.log(file)
-      const res = await fetch("https://ncnmjwtaooob5dzhmhhv3n52su.apigateway.il-jerusalem-1.oci.customer-oci.com/test/putFile",{
+      const reader = new FileReader()
+      reader.readAsArrayBuffer(file)
+      reader.onload = async (e) => {
+        const res = await fetch("https://ncnmjwtaooob5dzhmhhv3n52su.apigateway.il-jerusalem-1.oci.customer-oci.com/test/putFile",{
         method: 'PUT',
         headers: {
           'Content-type': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
         },
-        body: file
+        body: e.target.result
       })
       setResponse(await res)
+      }
+      // await fetch("https://ncnmjwtaooob5dzhmhhv3n52su.apigateway.il-jerusalem-1.oci.customer-oci.com/test/hello")
+      //       .then((res)=>res.json()).then((json)=>setResponse(json))
+      console.log(file)
+      console.log(reader.result)
+      
       // getBase64(file)
     }
     
