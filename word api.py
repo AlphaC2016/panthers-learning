@@ -11,8 +11,11 @@ import docx
 import oci
 from oci.config import validate_config
 from deep_translator import GoogleTranslator
-import requests
 import json
+from googleapiclient.discovery import build
+from googlesearch import search
+import urllib
+from bs4 import BeautifulSoup
 
 FILENAME = r"C:\Users\kelle\Desktop\TESTW.docx"
 CONFIG_FILE = r"C:\Users\kelle\.oci\config"
@@ -32,33 +35,6 @@ def read_docx():
         fulltext.append(para.text)
     return "\n".join(fulltext)
 
-# def api_trunslet(translated):
-#     # Text Translation
-#
-#     # Create a default config using DEFAULT profile in default location
-#     # config = oci.config.from_file(f"{CONFIG_FILE}")
-#     config = {
-#         "user": f"{USER}",
-#         "fingerprint": f"{FINGERPRINT}",
-#         "tenancy": f"{TENANCY}",
-#         "region": f"{REGION}",
-#         "key_file": f"{KEY_FILE}"
-#     }
-#     validate_config(config)
-#     # Initialize service client with default config file
-#     ai_language_client = oci.ai_language.AIServiceLanguageClient(config)
-#
-#     batch_detect_language_key_phrases_response = ai_language_client.batch_detect_language_key_phrases(
-#         batch_detect_language_key_phrases_details=oci.ai_language.models.BatchDetectLanguageKeyPhrasesDetails(
-#             documents=[
-#                 oci.ai_language.models.TextDocument(
-#                     key="doc1",
-#                     text=f"{translated}",
-#                     language_code="en")]
-#         ))
-#
-#     # Get the data from response
-#     print(batch_detect_language_key_phrases_response.data)
 
 def create_config():
     # Create a default config using DEFAULT profile in default location
@@ -71,8 +47,9 @@ def create_config():
         "key_file": f"{KEY_FILE}"
     }
     validate_config(config)
+    return config
 
-def api_ai(translated):
+def api_ai(translated, config):
     # Get the main key phrases
     ai_language_client = oci.ai_language.AIServiceLanguageClient(config)
 
@@ -84,32 +61,31 @@ def api_ai(translated):
                     text=f"{translated}",
                     language_code="en")]
         ))
-
-    # Get the data from response
     print(batch_detect_language_key_phrases_response.data)
+    return batch_detect_language_key_phrases_response.data
 
+def Classify_ai(data):
+    # classifys the main 5 key phrases
+    data = str(data)
+    json_dict = json.loads(data)
+    dict5 = json_dict['documents'][0]['key_phrases'][1:5]
+    print(dict5)
+    return dict5
 
-    #URL = "https://language.il-jerusalem-1/20210101/actions/batchDetectLanguageKeyPhrases"
-    #response = requests.get(URL)
-    #print(response)
-    #print()
-   # json_response = json.loads(response.text)
-   # print(json_response)
-  #  data = response.json({
-   #   "documents": [
-   #     {
-   #       "key": "doc1",
-  #        "text": f"{translated}"
-   #     }
-  #    ]
-  #  })
+def google_search(search_term, api_key, cse_id, **kwargs):
+    """this function took me soo mach time to make you
+    need to create google api with google cloud and your own search engine
+    welcome to PANTHERSEARCH"""
+
+    service = build("customsearch", "v1", developerKey=api_key)
+    res = service.cse().list(q=search_term, cx=cse_id, **kwargs).execute()
+    return res['items']
 
 
 def google_api_trunslet(fulltext):
-    """translets the docx from hebrew to english"""
+    # translets the docx from hebrew to english
     to_translate = fulltext
     translated = GoogleTranslator(source='auto', target='en').translate(to_translate)
-    print(translated)
     return translated
 
 def google_api_trunslet_revers(translated):
@@ -117,13 +93,19 @@ def google_api_trunslet_revers(translated):
     translated = GoogleTranslator(source='en', target='iw').translate(to_translate)
     print(translated)
 def main():
-
+    my_api_key = "AIzaSyAfAAwfwQFVCKNne9WJrNixONncLSgDp38"
+    my_cse_id = "3028683e43d81493a"
     fulltext = read_docx()
-    print(fulltext)
     translated = google_api_trunslet(fulltext)
-    create_config()
-    api_ai(translated)
-    translated = google_api_trunslet_revers(translated)
+    config = create_config()
+    data = api_ai(translated, config)
+    key_phrases = Classify_ai(data)
+
+    results = google_search('"god is a woman" "thank you next" "7 rings"', my_api_key, my_cse_id, num=10)
+    for result in results:
+        print(result)
+
+    #translated = google_api_trunslet_revers(translated)
 
 if __name__ == "__main__":
     main()
