@@ -29,6 +29,7 @@ function App() {
           'Content-type': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
         },
         body: e.target.result
+        
       })
       setResponse(await res)
       }
