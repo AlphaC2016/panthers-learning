@@ -14,7 +14,7 @@ from deep_translator import GoogleTranslator
 import requests
 import json
 
-#Keren 11111
+# Shaked 11111
 FILENAME = r"C:\Users\kelle\Desktop\TESTW.docx"
 PRIVATE_KEY = r"C:\Users\kelle\Desktop\oracel_keys\kellerg2002@gmail.com_2023-08-23T11_46_39.769Z.pem"
 def read_docx():
