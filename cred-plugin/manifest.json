@@ -1,0 +1,24 @@
+{
+    "name": "Content credibility plugin",
+    "description": "check the credibility of search results",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+        "default_popup": "hello.html",
+        "default_icon": "images/panther.png"
+      },
+      "icons": {
+        "16": "images/panther.png",
+        "32": "images/panther.png",
+        "48": "images/panther.png",
+        "128": "images/panther.png"
+      },
+    "content_scripts": [
+      {
+        "js": ["scripts/content.js"],
+        "matches": [
+          "https://*/*"
+        ]
+      }
+    ]
+}
