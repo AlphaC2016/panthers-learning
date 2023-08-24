@@ -24,7 +24,7 @@ code {
 }
 
 button{
-  font-family: heebo;
+  font-family: revert;
   background-image: linear-gradient(
     to right,
     rgb(46, 82, 102),
@@ -156,7 +156,7 @@ span:before
   position: relative;
   padding: 0;
   margin: 0;
-  font-family: heebo;
+  font-family: revert;
   font-weight: 200;
   font-size: 30px;
   color: rgb(255, 252, 252);
@@ -206,7 +206,7 @@ input::file-selector-button {
   padding: 1rem 1.25rem;
   text-shadow: 0 1px 1px #333;
   transition: all 0.25s;
-  font-family: heebo;
+  font-family: revert;
 }
 input::file-selector-button:hover {
   cursor: pointer;
