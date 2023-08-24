@@ -1,0 +1,14 @@
+[
+    {
+        "link": "https://chat.openai.com/",
+        "score": "42" 
+    },
+    {
+        "link": "https://www.google.com/",
+        "score": "74"
+    },
+    {
+        "link": "https://www.bing.com/",
+        "score": "0"
+    }
+]
