@@ -40,6 +40,7 @@ button{
   padding: 1rem 1.25rem;
   text-shadow: 0 1px 1px #333;
   transition: all 0.25s;
+  margin-top: 6%;
 }
 button:hover{
   cursor: pointer;
@@ -166,23 +167,9 @@ span:before
 }
 
 .ExtentionButton{
-  /* cursor: pointer; */
-  top: 10%;
-  left: 80%;
+  top: 15%;
+  left: 43%;
   position: absolute;
-  /* width: 10%; */
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 6px 14px;
-  border-radius: 6px;
-  color: #3D3D3D;
-  background: #fff;
-  border: none;
-  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation; */
 
 }
 .ExtentionButton:focus {
@@ -210,6 +197,5 @@ input::file-selector-button {
 }
 input::file-selector-button:hover {
   cursor: pointer;
-  /* background-position-x: 10%; */
   transform: scale(0.9);
 }
