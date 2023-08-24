@@ -8,6 +8,13 @@ function App() {
   const [response, setResponse] = useState()
   const [state, setState] = useState(0)
 
+  const fakeLinks = [
+    "https://stackoverflow.com/questions/18750803",
+    "https://css-tricks.com/almanac/selectors/f/file-selector-button",
+    "https://www.w3docs.com/tools/code-editor/13849",
+    "https://getcssscan.com/css-buttons-examples"
+  ]
+
   const background = () =>{
     
     <div className="d-flex flex-column justify-content-center w-100 h-100"></div>
@@ -62,14 +69,14 @@ function App() {
       <button className='ExtentionButton' onClick={()=>{}}>Add Extention</button>
 
       <div>
-        <input type='file' onChange={(e) => setFile(e.target.files[0])} />
-        <button onClick={useFile}>use file</button>
+        <input type='file' className='inputFile' onChange={(e) => setFile(e.target.files[0])} />
+        <button onClick={useFile}>Use File</button>
         {state === 1 ? <div className="ring">
                           Loading
                           <span></span>
                         </div> : <></>}
         {console.log(response)}
-        {response ? response.map((res)=><div>link: {res.link} / - /  score: {res.score}</div>) : <></>}
+        <ul className='linkList'>{response ? fakeLinks.map((res, index)=><li className='listObj' key={index+1} value={res}> {index+1}: <u><a href={res} style={{color: "whitesmoke"}}>{res}</a></u> </li>) : <></>}</ul>
         
       </div>
       
